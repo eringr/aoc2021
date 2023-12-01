@@ -1,16 +1,7 @@
 
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
-
 fn get_input() -> Vec<String> {
-    let file = File::open("input").expect("Input not found");
-    let reader = BufReader::new(file);
-    let mut ret = Vec::new();
-    for line in reader.lines() {
-        ret.push(line.unwrap().to_string());
-    }
-    ret
+    let strin = std::fs::read_to_string("input").expect("Input not found");
+    strin.lines().map(|x| x.to_string()).collect::<Vec<String>>()
 }
 
 fn part1(input: &Vec<String>) {

@@ -1,8 +1,4 @@
 
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
-
 #[derive(Copy, Clone)]
 struct Board {
     all_numbers: [i32; 25],
@@ -58,17 +54,16 @@ impl Board {
 }
 
 fn get_input() -> (Vec<i32>, Vec<Board>) {
-    let file = File::open("input").expect("Input not found");
-    let reader = BufReader::new(file);
-    let mut it = reader.lines();
+    let strin = std::fs::read_to_string("input").expect("Input not found");
+    let mut it = strin.lines();
 
     let line1 = it.next();
-    let draws = line1.unwrap().unwrap().split(",")
+    let draws = line1.unwrap().split(",")
         .map(|x| x.to_string().parse::<i32>().unwrap())
         .collect::<Vec<i32>>();
 
     let mut boards = Vec::<Board>::new();
-    let in_buf = it.map(|x| x.unwrap()).collect::<Vec<String>>();
+    let in_buf = it.map(|x| x.to_string()).collect::<Vec<String>>();
     for chunk in in_buf.chunks(6) {
         boards.push(Board::new(
             chunk.join(" ")

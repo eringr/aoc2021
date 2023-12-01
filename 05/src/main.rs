@@ -1,7 +1,4 @@
 
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
 use regex::Regex;
 
 #[derive(Clone)]
@@ -29,13 +26,11 @@ impl VentMap {
 }
 
 fn get_input() -> Vec<(usize, usize, usize, usize)> {
-    let file = File::open("input").expect("Input not found");
-    let reader = BufReader::new(file);
+    let strin = std::fs::read_to_string("input").expect("Input not found");
     let re = Regex::new(r"([0-9]+),([0-9]+) -> ([0-9]+),([0-9]+)").unwrap();
     let mut ret = Vec::new();
-    for line in reader.lines() {
-        let line_str = line.unwrap();
-        let caps = re.captures(line_str.as_str()).unwrap();
+    for line in strin.lines() {
+        let caps = re.captures(line).unwrap();
         let parser = |x: Option<regex::Match>|
             x.unwrap().as_str().parse::<usize>().unwrap();
         ret.push((

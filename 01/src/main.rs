@@ -1,16 +1,7 @@
 
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
-
 fn get_input() -> Vec<i32> {
-    let file = File::open("input").expect("Input not found");
-    let reader = BufReader::new(file);
-    let mut ret = Vec::new();
-    for line in reader.lines() {
-        ret.push(line.unwrap().parse::<i32>().unwrap());
-    }
-    ret
+    let strin = std::fs::read_to_string("input").expect("Input not found");
+    strin.lines().map(|x| x.parse::<i32>().unwrap()).collect::<Vec<i32>>()
 }
 
 fn part1(input: &Vec<i32>) {
@@ -31,7 +22,7 @@ fn part2(input: &Vec<i32>) {
     let mut previous = *it.next().unwrap();
     let mut increases = 0;
     loop {
-        let mut window_iter = it.clone();
+        let window_iter = it.clone();
         let mut window_total = 0;
         for i in window_iter.take(3) {
             window_total += i;
